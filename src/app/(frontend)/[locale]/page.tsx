@@ -36,6 +36,17 @@ export const metadata = buildMetadata({
   isHome: true,
 })
 
+/** Fallback thumbnails for the excursion list, used until the CMS has an image. */
+const EXPERIENCE_FALLBACKS = [
+  PLACEHOLDER.canoe,
+  PLACEHOLDER.jungle,
+  PLACEHOLDER.bird,
+  PLACEHOLDER.crocodile,
+  PLACEHOLDER.culture,
+  PLACEHOLDER.village,
+  PLACEHOLDER.sunset,
+]
+
 const AWARD_BADGES = [
   { src: '/awards/booking.png', alt: 'Booking.com award', label: 'Booking.com' },
   { src: '/awards/trip.jpg', alt: 'Trip.com award', label: 'Trip.com' },
@@ -361,32 +372,60 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               </FadeUp>
 
               <FadeUp delay={0.15} className="lg:col-span-6">
-                <ul className="divide-y divide-espresso/10 border-y border-espresso/10">
-                  {restExperiences.slice(0, 7).map((exp, index) => (
-                    <li key={exp.id}>
-                      <Link
-                        href="/experiences"
-                        className="group relative grid grid-cols-[2rem_minmax(0,1fr)_auto] items-start gap-3 border-b border-espresso/10 py-5 transition-all duration-300 first:border-t hover:translate-x-1 hover:bg-cream/55 sm:grid-cols-[2.5rem_minmax(0,1fr)_7rem_auto] sm:gap-4 sm:px-4"
-                      >
-                        <span className="absolute bottom-0 left-0 top-0 w-0.5 origin-bottom scale-y-0 bg-sage-dark transition-transform duration-300 group-hover:scale-y-100" />
-                        <span className="pt-1 text-xs font-semibold tracking-[0.12em] text-sage-dark">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <div className="min-w-0">
-                          <h3 className="font-serif text-[1.45rem] font-light leading-tight text-espresso transition-colors group-hover:text-sage-dark">
-                            {exp.title}
-                          </h3>
-                          <p className="mt-1.5 max-w-md truncate text-sm leading-6 text-espresso/58">
-                            {exp.shortDescription}
-                          </p>
-                        </div>
-                        {exp.duration && (
-                          <span className="mt-0.5 whitespace-nowrap rounded-full border border-sage/70 px-2.5 py-1 text-right text-[10px] font-medium uppercase tracking-[0.13em] text-espresso/50">{exp.duration}</span>
-                        )}
-                        <ArrowRight className="mt-1 h-4 w-4 -translate-x-1 text-sage-dark opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
-                      </Link>
-                    </li>
-                  ))}
+                <ul className="border-t border-espresso/10">
+                  {restExperiences.slice(0, 7).map((exp, index) => {
+                    const thumb = resolveMedia(exp.image, 'thumbnail')
+                    return (
+                      <li key={exp.id}>
+                        <Link
+                          href="/experiences"
+                          className="group relative flex items-center gap-4 border-b border-espresso/10 py-4 transition-colors duration-200 hover:bg-cream/60 sm:gap-5 sm:px-3"
+                        >
+                          <span className="absolute inset-y-0 left-0 w-0.5 origin-center scale-y-0 bg-sage-dark transition-transform duration-200 group-hover:scale-y-100" />
+
+                          <span className="w-6 shrink-0 self-start pt-1 text-xs font-semibold tabular-nums tracking-[0.12em] text-sage-dark">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+
+                          <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-cream sm:h-[4.5rem] sm:w-[4.5rem]">
+                            <Image
+                              src={
+                                thumb?.url ??
+                                EXPERIENCE_FALLBACKS[index % EXPERIENCE_FALLBACKS.length]
+                              }
+                              alt=""
+                              fill
+                              sizes="72px"
+                              className="img-grade object-cover"
+                            />
+                          </div>
+
+                          <div className="min-w-0 flex-1">
+                            <h3 className="font-serif text-lg font-light leading-snug text-espresso transition-colors group-hover:text-sage-dark sm:text-xl">
+                              {exp.title}
+                            </h3>
+                            <p className="mt-1 line-clamp-2 text-sm leading-6 text-espresso/60">
+                              {exp.shortDescription}
+                            </p>
+                            {exp.duration && (
+                              <p className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.13em] text-espresso/45 sm:hidden">
+                                {exp.duration}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="hidden shrink-0 items-center gap-3 sm:flex">
+                            {exp.duration && (
+                              <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-[0.13em] text-espresso/45">
+                                {exp.duration}
+                              </span>
+                            )}
+                            <ArrowRight className="h-4 w-4 text-sage-dark opacity-35 transition-opacity duration-200 group-hover:opacity-100" />
+                          </div>
+                        </Link>
+                      </li>
+                    )
+                  })}
                 </ul>
                 <div className="mt-8">
                   <TextLink href="/experiences">Every Excursion</TextLink>

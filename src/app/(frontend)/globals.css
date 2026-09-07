@@ -97,7 +97,7 @@ body {
   @apply font-serif font-light leading-[1.05] text-espresso;
 }
 .display em {
-  @apply italic font-normal not-italic;
+  @apply font-normal;
   font-style: italic;
 }
 

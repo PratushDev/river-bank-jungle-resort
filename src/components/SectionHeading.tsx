@@ -32,12 +32,16 @@ export function SectionHeading({
     return (
       <div className="mb-12 text-center md:mb-16">
         {label && <p className={dark ? 'kicker-light mb-4' : 'kicker mb-4'}>{label}</p>}
-        <Tag className={`display text-[clamp(2rem,4.2vw,3.4rem)] ${dark ? '!text-ivory' : ''}`}>{title}</Tag>
+        <Tag
+          className={`display text-balance text-[clamp(2rem,4.2vw,3.4rem)] ${dark ? '!text-ivory' : ''}`}
+        >
+          {title}
+        </Tag>
         <RiverRule className="mx-auto mt-6" tone={dark ? 'light' : 'gold'} />
         {intro && (
           <p
-            className={`mx-auto mt-6 max-w-xl text-[15px] leading-[1.75] ${
-              dark ? 'text-ivory/65' : 'text-espresso/65'
+            className={`mx-auto mt-6 max-w-xl text-pretty text-[15px] leading-[1.75] ${
+              dark ? 'text-ivory/75' : 'text-espresso/75'
             }`}
           >
             {intro}
@@ -48,22 +52,34 @@ export function SectionHeading({
   }
 
   return (
-    <div className="mb-12 grid gap-6 md:mb-16 md:grid-cols-12 md:gap-10">
-      <div className="md:col-span-7">
-        {label && <p className={dark ? 'kicker-light mb-4' : 'kicker mb-4'}>{label}</p>}
-        <Tag className={`display text-[clamp(2rem,4.2vw,3.4rem)] ${dark ? '!text-ivory' : ''}`}>{title}</Tag>
-        <RiverRule className="mt-6" tone={dark ? 'light' : 'gold'} />
-      </div>
-      {(intro || aside) && (
-        <div className="md:col-span-5 md:self-end md:pb-2">
-          {intro && (
-            <p className={`text-[15px] leading-[1.75] ${dark ? 'text-ivory/65' : 'text-espresso/65'}`}>
-              {intro}
-            </p>
-          )}
-          {aside}
+    <div className="mb-12 md:mb-16">
+      <div className="grid gap-x-10 gap-y-5 md:grid-cols-12">
+        <div className="md:col-span-7">
+          {label && <p className={dark ? 'kicker-light mb-4' : 'kicker mb-4'}>{label}</p>}
+          <Tag
+            className={`display text-balance text-[clamp(2rem,4.2vw,3.4rem)] ${dark ? '!text-ivory' : ''}`}
+          >
+            {title}
+          </Tag>
         </div>
-      )}
+        {(intro || aside) && (
+          /* Bottom-aligned so the prose sits on the title's last baseline
+             rather than drifting below the section rule. */
+          <div className="md:col-span-5 md:self-end">
+            {intro && (
+              <p
+                className={`max-w-md text-pretty text-[15px] leading-[1.75] ${
+                  dark ? 'text-ivory/75' : 'text-espresso/75'
+                }`}
+              >
+                {intro}
+              </p>
+            )}
+            {aside}
+          </div>
+        )}
+      </div>
+      <RiverRule className="mt-8" tone={dark ? 'light' : 'gold'} />
     </div>
   )
 }

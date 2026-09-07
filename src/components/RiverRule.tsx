@@ -15,7 +15,9 @@ type Props = {
  */
 export function RiverRule({ className = '', tone = 'gold', width = 168 }: Props) {
   const reduced = useReducedMotion()
-  const stroke = tone === 'gold' ? 'var(--color-gold)' : 'var(--color-gold)'
+  /* Light sections need the deeper sage to read at all; espresso sections
+     need the pale one. Previously both branches returned the same value. */
+  const stroke = tone === 'gold' ? 'var(--color-gold-dark)' : 'var(--color-gold)'
 
   return (
     <svg
