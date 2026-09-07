@@ -1,0 +1,183 @@
+'use client'
+
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
+import { useEffect, useState } from 'react'
+
+import { Link, usePathname } from '@/i18n/navigation'
+import { NAV_LINKS, PRIMARY_NAV_LINKS } from '@/lib/constants'
+
+import { CloseIcon, ExternalIcon, MenuIcon } from './icons'
+
+type Props = {
+  bookingUrl: string
+  virtualTourUrl: string
+  logoUrl?: string
+}
+
+export function Navbar({
+  bookingUrl,
+  virtualTourUrl,
+  logoUrl = '/logo.png',
+}: Props) {
+  const t = useTranslations('nav')
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
+  const pathname = usePathname()
+  const reduced = useReducedMotion()
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 80)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Close the overlay on navigation and lock body scroll while open
+  useEffect(() => {
+    setOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
+  const solid = scrolled || open
+
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        solid
+          ? 'bg-sage-dark border-b border-sage shadow-lg'
+          : 'border-b border-transparent bg-gradient-to-b from-espresso/80 via-espresso/35 to-transparent'
+      }`}
+    >
+      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-4 sm:px-6 md:h-20">
+        <Link href="/" className="group flex items-center" aria-label="River Bank Jungle Resort — Home">
+          <Image
+            src={logoUrl}
+            alt="River Bank Jungle Resort"
+            width={116}
+            height={60}
+            priority
+            className="h-11 w-auto drop-shadow-[0_1px_6px_rgba(42,33,26,0.5)] md:h-13"
+          />
+        </Link>
+
+        <nav className="hidden items-center gap-6 xl:flex" aria-label="Main navigation">
+          {PRIMARY_NAV_LINKS.map((link) => (
+            <Link
+              key={link.key}
+              href={link.href}
+              data-active={pathname === link.href}
+              className={`nav-underline pb-1 text-xs font-medium uppercase tracking-[0.14em] transition-colors hover:text-gold ${
+                pathname === link.href ? 'text-gold' : 'text-ivory'
+              }`}
+            >
+              {t(link.key)}
+            </Link>
+          ))}
+          <a
+            href={virtualTourUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-underline pb-1 text-xs font-medium uppercase tracking-[0.14em] text-ivory transition-colors hover:text-forest"
+          >
+            360 Tours
+          </a>
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={bookingUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex min-h-10 items-center gap-2 border px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-5 sm:text-[10.5px] sm:tracking-[0.22em] ${
+              solid
+                ? 'border-ivory/60 bg-ivory text-sage-dark hover:bg-sage hover:text-forest'
+                : 'border-sage-dark bg-sage-dark text-ivory hover:bg-sage hover:text-forest'
+            }`}
+          >
+            {t('bookNow')}
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-label={open ? t('closeMenu') : t('menu')}
+            className="inline-flex h-11 w-11 items-center justify-center text-ivory transition-colors hover:text-forest"
+          >
+            {open ? <CloseIcon /> : <MenuIcon />}
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={reduced ? { opacity: 1 } : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 top-[4.5rem] z-40 flex flex-col overflow-y-auto bg-espresso md:top-20"
+          >
+            <motion.nav
+              aria-label="Mobile navigation"
+              className="flex flex-1 flex-col items-center justify-center gap-1 py-10"
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
+            >
+              {[{ href: '/', key: 'home' as const }, ...NAV_LINKS].map((link) => (
+                <motion.div
+                  key={link.key}
+                  variants={{
+                    hidden: reduced ? { opacity: 1 } : { opacity: 0, y: 16 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    className={`block px-8 py-2.5 text-center font-serif text-[1.7rem] transition-colors hover:text-gold ${
+                      pathname === link.href ? 'text-gold' : 'text-ivory'
+                    }`}
+                  >
+                    {t(link.key)}
+                  </Link>
+                </motion.div>
+              ))}
+              <motion.div
+                variants={{
+                  hidden: reduced ? { opacity: 1 } : { opacity: 0, y: 16 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+                }}
+                className="mt-6 flex flex-col items-center gap-4"
+              >
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center bg-gold px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-espresso transition-colors hover:bg-gold-dark"
+                >
+                  {t('bookNow')}
+                </a>
+                <a
+                  href={virtualTourUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold hover:text-ivory"
+                >
+                  {t('virtualTour')} <ExternalIcon />
+                </a>
+              </motion.div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  )
+}

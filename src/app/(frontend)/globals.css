@@ -1,0 +1,273 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens — a quiet, botanical palette for the riverside lodge.
+ * Swap these variables to restyle the whole site.
+ */
+@theme {
+  --color-ivory: #f7f8f2;
+  --color-cream: #eaf0e4;
+  --color-espresso: #20372d;
+  --color-espresso-light: #315044;
+  --color-forest: #20372d;
+  --color-sage: #c6d5b8;
+  --color-sage-dark: #7f9a76;
+  --color-gold: #c6d5b8;
+  --color-gold-dark: #7f9a76;
+  --color-clay: #b97958;
+  --color-slate: #5d7168;
+
+  --font-serif: var(--font-display), 'Cormorant Garamond', Georgia, serif;
+  --font-sans: var(--font-inter), 'Montserrat', system-ui, sans-serif;
+
+  --shadow-card: 0 6px 24px -8px rgb(42 33 26 / 0.14);
+  --shadow-card-hover: 0 14px 40px -10px rgb(42 33 26 / 0.22);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply text-espresso font-sans antialiased;
+  /* Graded paper: a soft top-light falling into warmer cream */
+  background-color: var(--color-ivory);
+  background-image: linear-gradient(180deg, #fbfcf8 0%, var(--color-ivory) 28%, #edf2e8 100%);
+  background-attachment: fixed;
+}
+
+/*
+ * Paper grain — a fine fibre texture laid over section backgrounds.
+ * Pure inline SVG turbulence: no asset request, GPU-composited, ~4% alpha.
+ */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+}
+.grain-dark::after {
+  mix-blend-mode: screen;
+  opacity: 0.045;
+}
+
+/* Universal hero text treatment — reads over any photograph */
+.hero-text-shadow {
+  text-shadow:
+    0 1px 2px rgb(12 24 19 / 0.85),
+    0 3px 26px rgb(12 24 19 / 0.8);
+}
+
+/* Nav link underline that grows from the left */
+.nav-underline {
+  background-image: linear-gradient(var(--color-gold), var(--color-gold));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left calc(100% + 4px);
+  transition: background-size 0.35s ease, color 0.3s ease;
+}
+.nav-underline:hover,
+.nav-underline[data-active='true'] {
+  background-size: 100% 1px;
+}
+
+/* ——— Voice: small-caps kicker used for every label ——— */
+.kicker {
+  @apply text-xs font-medium uppercase tracking-[0.2em] text-gold-dark;
+}
+
+.kicker-light {
+  @apply text-xs font-medium uppercase tracking-[0.2em] text-gold;
+}
+
+/* Legacy alias — inner pages still using label-caps get the kicker treatment */
+.label-caps {
+  @apply text-xs font-medium uppercase tracking-[0.2em] text-gold-dark;
+}
+
+/* Display headings: large, light, tight leading. Italic word = emphasis. */
+.display {
+  @apply font-serif font-light leading-[1.05] text-espresso;
+}
+.display em {
+  @apply italic font-normal not-italic;
+  font-style: italic;
+}
+
+/* Thin gold hairline divider (kept for small uses) */
+.hairline {
+  @apply mx-auto h-px w-16 bg-gold;
+}
+
+/* Unified photo grade — makes mixed photography read as one commission */
+.img-grade {
+  filter: saturate(0.92) contrast(0.98) brightness(1.01);
+}
+
+.image-caption {
+  position: relative;
+}
+
+.image-caption::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, rgb(16 35 28 / 0.72) 100%);
+}
+
+.image-caption > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Text link with extending gold underline — the default action style */
+.link-line {
+  @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-espresso;
+  background-image: linear-gradient(var(--color-gold), var(--color-gold));
+  background-size: 24px 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  padding-bottom: 6px;
+  transition: background-size 0.4s ease, color 0.3s ease;
+}
+.link-line:hover {
+  background-size: 100% 1px;
+  color: var(--color-gold-dark);
+}
+.link-line-light {
+  @apply text-ivory;
+}
+.link-line-light:hover {
+  color: var(--color-gold);
+}
+
+/* Hero Ken Burns — slow zoom, GPU-friendly (transform only) */
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.08) translateY(-1.2%);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-kenburns {
+  animation: kenburns 26s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* River divider draw-in */
+@keyframes river-draw {
+  from {
+    stroke-dashoffset: 340;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.river-path {
+  stroke-dasharray: 340;
+  stroke-dashoffset: 0;
+}
+
+.in-view .river-path {
+  animation: river-draw 1.6s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .in-view .river-path {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Gold underline that slides in on card-title hover */
+.title-underline {
+  background-image: linear-gradient(var(--color-gold), var(--color-gold));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.35s ease;
+}
+
+.group:hover .title-underline,
+.title-underline:hover {
+  background-size: 100% 1px;
+}
+
+/* Slow award gallery movement keeps the recognition band alive without competing with the hero. */
+.awards-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.awards-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 2rem;
+  padding-inline: 1rem;
+  animation: awards-pan 12s linear infinite alternate;
+}
+
+@keyframes awards-pan {
+  from {
+    transform: translateX(-18%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .awards-track {
+    animation: none;
+  }
+}
+
+/* Rich text defaults for CMS content */
+.rich-text {
+  @apply text-[16px] leading-[1.9] text-espresso/85;
+}
+.rich-text p {
+  @apply mb-4;
+}
+.rich-text h2 {
+  @apply font-serif font-light text-3xl mt-10 mb-3 text-espresso;
+}
+.rich-text h3 {
+  @apply font-serif font-normal text-2xl mt-7 mb-2 text-espresso;
+}
+.rich-text ul {
+  @apply list-disc pl-6 mb-4 marker:text-gold;
+}
+.rich-text ol {
+  @apply list-decimal pl-6 mb-4 marker:text-gold;
+}
+.rich-text a {
+  @apply text-gold-dark underline underline-offset-2 hover:text-gold;
+}
+.rich-text blockquote {
+  @apply border-l border-gold pl-4 font-serif text-xl italic text-espresso/70 my-5;
+}
+
+/* Accessible focus states */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
