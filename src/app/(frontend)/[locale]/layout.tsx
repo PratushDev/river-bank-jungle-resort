@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Montserrat } from 'next/font/google'
+import { Marcellus, Plus_Jakarta_Sans } from 'next/font/google'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
@@ -11,7 +11,9 @@ import { MobileBookBar } from '@/components/MobileBookBar'
 import { Navbar } from '@/components/Navbar'
 import { OtaFloat } from '@/components/OtaFloat'
 import { WhatsAppFloat } from '@/components/WhatsAppFloat'
+import { NavigationProgressBar } from '@/components/NavigationProgressBar'
 import { VirtualTourPrompt } from '@/components/VirtualTourPrompt'
+import { FloatingLeaves } from '@/components/FloatingLeaves'
 import { routing } from '@/i18n/routing'
 import { DEFAULTS, SITE_NAME, SITE_URL } from '@/lib/constants'
 import { getSiteSettings } from '@/lib/data'
@@ -20,15 +22,14 @@ import { resolveMedia } from '@/lib/media'
 
 import '../globals.css'
 
-const cormorant = Cormorant_Garamond({
+const marcellus = Marcellus({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  style: ['normal', 'italic'],
+  weight: '400',
   variable: '--font-display',
   display: 'swap',
 })
 
-const montserrat = Montserrat({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-inter',
@@ -108,10 +109,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   const logoUrl = resolveMedia(settings?.logo, 'original')?.url ?? '/logo.png'
 
   return (
-    <html lang={locale === 'np' ? 'ne' : 'en'} className={`${cormorant.variable} ${montserrat.variable}`}>
+    <html lang={locale === 'np' ? 'ne' : 'en'} className={`${marcellus.variable} ${plusJakartaSans.variable}`} data-scroll-behavior="smooth">
       <body>
         <JsonLd data={resortSchema(settings)} />
         <NextIntlClientProvider messages={messages}>
+          <NavigationProgressBar />
+          <FloatingLeaves />
           <Navbar
             bookingUrl={bookingUrl}
             virtualTourUrl={virtualTourUrl}

@@ -58,7 +58,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         title="A Lodge Shaped by the River"
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2">
           <FadeUp>
             <p className="label-caps mb-3">About River Bank</p>
@@ -101,13 +101,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-cream py-20 md:py-28">
+      <section className="grain bg-cream py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading label="Why River Bank" title="What Makes This Place Itself" />
           <StaggerGroup className="grid gap-7 md:grid-cols-3">
             {pillars.map((pillar) => (
               <StaggerItem key={pillar.title}>
-                <div className="h-full rounded-lg bg-white p-8 shadow-card">
+                <div className="grain h-full rounded-lg bg-white p-8 shadow-card">
                   <h3 className="font-serif text-xl text-espresso">{pillar.title}</h3>
                   <div className="my-4 h-px w-10 bg-gold" />
                   <p className="text-sm leading-relaxed text-espresso/70">{pillar.body}</p>
@@ -118,7 +118,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
           <FadeUp>
             <SectionHeading

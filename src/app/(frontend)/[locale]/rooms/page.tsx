@@ -43,7 +43,7 @@ export default async function RoomsPage({ params }: { params: Promise<{ locale: 
         subtitle="Every room faces the river or the gardens — cool marble underfoot, the Terai at the window."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading
             label="Choose Your Space"

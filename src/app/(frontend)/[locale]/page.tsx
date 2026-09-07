@@ -11,6 +11,7 @@ import { RiverRule } from '@/components/RiverRule'
 import { SectionHeading } from '@/components/SectionHeading'
 import { StaggerGroup, StaggerItem, FadeUp } from '@/components/motion'
 import { TestimonialCarousel } from '@/components/TestimonialCarousel'
+import { CertificateCarousel } from '@/components/CertificateCarousel'
 import { ArrowRight } from '@/components/icons'
 import { Link } from '@/i18n/navigation'
 import { DEFAULTS } from '@/lib/constants'
@@ -45,13 +46,6 @@ const EXPERIENCE_FALLBACKS = [
   PLACEHOLDER.culture,
   PLACEHOLDER.village,
   PLACEHOLDER.sunset,
-]
-
-const AWARD_BADGES = [
-  { src: '/awards/booking.png', alt: 'Booking.com award', label: 'Booking.com' },
-  { src: '/awards/trip.jpg', alt: 'Trip.com award', label: 'Trip.com' },
-  { src: '/awards/expedia.jpeg', alt: 'Expedia award', label: 'Expedia' },
-  { src: '/awards/hotel.jpeg', alt: 'Hotels.com award', label: 'Hotels.com' },
 ]
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
@@ -122,7 +116,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </TextExternal>
       </Hero>
 
-      <section className="relative z-20 -mt-1 border-y border-sage-dark/30 bg-ivory shadow-[0_12px_30px_-24px_rgba(32,55,45,0.6)]">
+      <section className="grain relative z-20 -mt-1 border-y border-sage-dark/30 bg-ivory shadow-[0_12px_30px_-24px_rgba(32,55,45,0.6)]">
         <div className="mx-auto grid max-w-7xl gap-5 px-4 py-6 sm:px-6 md:grid-cols-[1.25fr_1fr_1fr] md:items-center md:gap-8 md:py-7">
           <div>
             <p className="kicker mb-2">Plan your stay</p>
@@ -135,22 +129,48 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
-      <section aria-label="Awards and recognition" className="overflow-hidden border-y border-sage/50 bg-cream py-8 sm:py-10">
-        <div className="mb-5 text-center">
-          <p className="kicker">Awards &amp; recognition</p>
-          <p className="mt-2 font-serif text-2xl text-espresso sm:text-3xl">Chosen by guests around the world</p>
+      <section aria-label="Awards and guest review certificates" className="grain relative overflow-hidden border-y border-sage/40 bg-cream py-16 sm:py-20">
+        {/* Left side botanical leaf patch */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-8 top-1/2 -translate-y-1/2 z-10 hidden h-[440px] w-48 sm:w-56 md:w-64 lg:w-80 md:block opacity-90"
+          style={{
+            backgroundImage: "url('/textures/leaves.webp')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'left center',
+            maskImage: 'radial-gradient(ellipse at 15% 50%, black 50%, transparent 82%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at 15% 50%, black 50%, transparent 82%)',
+            filter: 'drop-shadow(4px 12px 28px rgba(26,46,36,0.30))',
+          }}
+        />
+
+        {/* Right side botanical leaf patch */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-8 top-1/2 -translate-y-1/2 z-10 hidden h-[440px] w-48 sm:w-56 md:w-64 lg:w-80 md:block opacity-90"
+          style={{
+            backgroundImage: "url('/textures/leaves.webp')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'right center',
+            maskImage: 'radial-gradient(ellipse at 85% 50%, black 50%, transparent 82%)',
+            WebkitMaskImage: 'radial-gradient(ellipse at 85% 50%, black 50%, transparent 82%)',
+            filter: 'drop-shadow(-4px 12px 28px rgba(26,46,36,0.30))',
+          }}
+        />
+
+        <div className="relative z-20 mx-auto mb-8 max-w-7xl px-4 text-center sm:px-6">
+          <p className="kicker mb-2">Verified Guest Recognition</p>
+          <h2 className="display text-[clamp(1.9rem,3.8vw,3rem)]">
+            Awarded by the world&rsquo;s <em className="italic">most trusted</em> travel platforms
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-xs leading-relaxed text-espresso/70 sm:text-sm">
+            Official 2026 guest review certificates celebrating exceptional hospitality, riverside comfort and unforgettable Chitwan safaris.
+          </p>
+          <RiverRule className="mx-auto mt-6" />
         </div>
-        <div className="awards-marquee group/marquee">
-          <div className="awards-track group-hover/marquee:[animation-play-state:paused]">
-            {[...AWARD_BADGES, ...AWARD_BADGES].map((award, index) => (
-              <Link key={`${award.label}-${index}`} href="/awards" className="group flex w-36 shrink-0 flex-col items-center gap-3 sm:w-48" aria-label={`${award.label} recognition`}>
-                <span className="relative h-24 w-32 sm:h-28 sm:w-40">
-                  <Image src={award.src} alt={award.alt} fill sizes="160px" className="object-contain transition-transform duration-500 group-hover:scale-110" />
-                </span>
-                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-espresso/65">{award.label}</span>
-              </Link>
-            ))}
-          </div>
+
+        <div className="relative z-20">
+          <CertificateCarousel />
         </div>
       </section>
 
@@ -379,7 +399,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                       <li key={exp.id}>
                         <Link
                           href="/experiences"
-                          className="group relative flex items-center gap-4 border-b border-espresso/10 py-4 transition-colors duration-200 hover:bg-cream/60 sm:gap-5 sm:px-3"
+                          className="grain group relative flex items-center gap-4 border-b border-espresso/10 py-4 transition-colors duration-200 hover:bg-cream/60 sm:gap-5 sm:px-3"
                         >
                           <span className="absolute inset-y-0 left-0 w-0.5 origin-center scale-y-0 bg-sage-dark transition-transform duration-200 group-hover:scale-y-100" />
 
@@ -387,7 +407,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                             {String(index + 1).padStart(2, '0')}
                           </span>
 
-                          <div className="relative h-16 w-16 shrink-0 overflow-hidden bg-cream sm:h-[4.5rem] sm:w-[4.5rem]">
+                          <div className="grain relative h-16 w-16 shrink-0 overflow-hidden bg-cream sm:h-[4.5rem] sm:w-[4.5rem]">
                             <Image
                               src={
                                 thumb?.url ??

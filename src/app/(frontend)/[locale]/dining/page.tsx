@@ -43,7 +43,7 @@ export default async function DiningPage({ params }: { params: Promise<{ locale:
         subtitle="Nepali, Indian, Japanese and Continental kitchens — from breakfast on the lawn to cocktails at the bar."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading label="Our Venues" title="Four Ways to Eat Well" />
           <StaggerGroup className="grid gap-7 sm:grid-cols-2">

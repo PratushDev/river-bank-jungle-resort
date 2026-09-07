@@ -77,7 +77,7 @@ export default async function RoomDetailPage({ params }: Props) {
       />
       <Hero size="banner" image={heroImage} label="Rooms & Suites" title={room.title} />
 
-      <section className="bg-ivory py-16 md:py-24">
+      <section className="grain bg-ivory py-16 md:py-24">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[2fr_1fr]">
           <FadeUp>
             <RichText data={room.description} />
@@ -120,7 +120,7 @@ export default async function RoomDetailPage({ params }: Props) {
               )}
 
               {(room.features ?? []).length > 0 && (
-                <div className="rounded-lg bg-white p-6 shadow-card">
+                <div className="grain rounded-lg bg-white p-6 shadow-card">
                   <h2 className="label-caps mb-4">At a Glance</h2>
                   <dl className="space-y-3">
                     {(room.features ?? []).map((f) => (
@@ -134,7 +134,7 @@ export default async function RoomDetailPage({ params }: Props) {
               )}
 
               {amenities.length > 0 && (
-                <div className="rounded-lg bg-white p-6 shadow-card">
+                <div className="grain rounded-lg bg-white p-6 shadow-card">
                   <h2 className="label-caps mb-4">Amenities</h2>
                   <ul className="grid grid-cols-2 gap-x-3 gap-y-2 text-sm text-espresso/75">
                     {amenities.map((name) => (
@@ -152,7 +152,7 @@ export default async function RoomDetailPage({ params }: Props) {
       </section>
 
       {experiences.length > 0 && (
-        <section className="bg-cream py-16 md:py-24">
+        <section className="grain bg-cream py-16 md:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <FadeUp className="mb-10 text-center">
               <p className="label-caps mb-3">Beyond the Room</p>
@@ -162,7 +162,7 @@ export default async function RoomDetailPage({ params }: Props) {
             <StaggerGroup className="grid gap-6 sm:grid-cols-3">
               {experiences.slice(0, 3).map((exp) => (
                 <StaggerItem key={exp.id}>
-                  <div className="rounded-lg bg-white p-6 shadow-card">
+                  <div className="grain rounded-lg bg-white p-6 shadow-card">
                     <h3 className="font-serif text-lg text-espresso">{exp.title}</h3>
                     <p className="mt-2 line-clamp-3 text-sm text-espresso/70">{exp.shortDescription}</p>
                   </div>

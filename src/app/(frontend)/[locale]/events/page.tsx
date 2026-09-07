@@ -56,13 +56,13 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         subtitle="Corporate retreats, weddings and family celebrations — with the jungle for a backdrop."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading label="Spaces" title="Rooms to Gather, Lawns to Celebrate" />
           <StaggerGroup className="grid gap-7 md:grid-cols-3">
             {venues.map((venue) => (
               <StaggerItem key={venue.title}>
-                <div className="h-full rounded-lg bg-white p-8 shadow-card">
+                <div className="grain h-full rounded-lg bg-white p-8 shadow-card">
                   <h3 className="font-serif text-xl text-espresso">{venue.title}</h3>
                   <div className="my-4 h-px w-10 bg-gold" />
                   <p className="text-sm leading-relaxed text-espresso/70">{venue.body}</p>
@@ -73,7 +73,7 @@ export default async function EventsPage({ params }: { params: Promise<{ locale:
         </div>
       </section>
 
-      <section className="bg-cream py-20 md:py-28">
+      <section className="grain bg-cream py-20 md:py-28">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <SectionHeading
             label="Enquire"

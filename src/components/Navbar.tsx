@@ -51,7 +51,7 @@ export function Navbar({
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         solid
-          ? 'bg-sage-dark border-b border-sage shadow-lg'
+          ? 'bg-espresso/95 backdrop-blur-md border-b border-gold/20 shadow-lg'
           : 'border-b border-transparent bg-gradient-to-b from-espresso/80 via-espresso/35 to-transparent'
       }`}
     >
@@ -67,11 +67,12 @@ export function Navbar({
           />
         </Link>
 
-        <nav className="hidden items-center gap-6 xl:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Main navigation">
           {PRIMARY_NAV_LINKS.map((link) => (
             <Link
               key={link.key}
               href={link.href}
+              prefetch={true}
               data-active={pathname === link.href}
               className={`nav-underline pb-1 text-xs font-medium uppercase tracking-[0.14em] transition-colors hover:text-gold ${
                 pathname === link.href ? 'text-gold' : 'text-ivory'
@@ -84,7 +85,7 @@ export function Navbar({
             href={virtualTourUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="nav-underline pb-1 text-xs font-medium uppercase tracking-[0.14em] text-ivory transition-colors hover:text-forest"
+            className="nav-underline pb-1 text-xs font-medium uppercase tracking-[0.14em] text-ivory transition-colors hover:text-gold"
           >
             360 Tours
           </a>
@@ -97,8 +98,8 @@ export function Navbar({
             rel="noopener noreferrer"
             className={`inline-flex min-h-10 items-center gap-2 border px-3 py-2 text-[9px] font-semibold uppercase tracking-[0.16em] transition-all duration-300 sm:px-5 sm:text-[10.5px] sm:tracking-[0.22em] ${
               solid
-                ? 'border-ivory/60 bg-ivory text-sage-dark hover:bg-sage hover:text-forest'
-                : 'border-sage-dark bg-sage-dark text-ivory hover:bg-sage hover:text-forest'
+                ? 'border-gold bg-gold text-espresso hover:bg-gold-dark hover:text-ivory'
+                : 'border-gold/90 bg-gold/90 text-espresso backdrop-blur-sm hover:bg-gold hover:text-espresso'
             }`}
           >
             {t('bookNow')}
@@ -108,7 +109,7 @@ export function Navbar({
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? t('closeMenu') : t('menu')}
-            className="inline-flex h-11 w-11 items-center justify-center text-ivory transition-colors hover:text-forest"
+            className="inline-flex h-11 w-11 items-center justify-center text-ivory transition-colors hover:text-gold focus:outline-none"
           >
             {open ? <CloseIcon /> : <MenuIcon />}
           </button>
@@ -116,9 +117,11 @@ export function Navbar({
       </div>
 
       <div
-        className="mobile-menu fixed inset-0 top-[4.5rem] z-40 flex flex-col overflow-y-auto bg-espresso md:top-20"
+        className={`mobile-menu fixed inset-0 top-[4.5rem] z-40 flex flex-col overflow-y-auto bg-espresso md:top-20 ${
+          open ? 'pointer-events-auto opacity-100 visible' : 'pointer-events-none opacity-0 invisible'
+        }`}
         data-open={open}
-        inert={!open}
+        aria-hidden={!open}
       >
         <nav
           aria-label="Mobile navigation"
@@ -128,7 +131,9 @@ export function Navbar({
             <div key={link.key} className="mobile-menu-item">
               <Link
                 href={link.href}
-                className={`block px-8 py-2.5 text-center font-serif text-[1.7rem] transition-colors hover:text-gold ${
+                prefetch={true}
+                onClick={() => setOpen(false)}
+                className={`block px-8 py-2.5 text-center font-serif text-[1.7rem] transition-colors hover:text-gold active:text-gold-dark ${
                   pathname === link.href ? 'text-gold' : 'text-ivory'
                 }`}
               >
@@ -141,6 +146,7 @@ export function Navbar({
               href={bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
               className="inline-flex items-center bg-gold px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-espresso transition-colors hover:bg-gold-dark"
             >
               {t('bookNow')}
@@ -149,6 +155,7 @@ export function Navbar({
               href={virtualTourUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
               className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold hover:text-ivory"
             >
               {t('virtualTour')} <ExternalIcon />

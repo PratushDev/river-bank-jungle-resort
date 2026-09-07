@@ -16,7 +16,7 @@ type ButtonProps = {
  */
 
 const gold =
-  'inline-flex min-h-12 items-center justify-center rounded-none bg-sage-dark px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-ivory transition-all duration-300 hover:bg-forest focus-visible:ring-2 focus-visible:ring-sage focus-visible:ring-offset-2 focus-visible:ring-offset-ivory'
+  'inline-flex min-h-12 items-center justify-center rounded-none bg-gold px-8 py-3.5 text-xs font-semibold uppercase tracking-[0.18em] text-espresso transition-all duration-300 hover:bg-gold-dark hover:text-ivory focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ivory shadow-sm'
 
 export function GoldLink({ href, children, className = '' }: ButtonProps & { href: string }) {
   return (
