@@ -1,35 +1,67 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import type { ReactNode } from 'react'
 
 type WrapperProps = {
   children: ReactNode
   className?: string
-  /** Retained for call-site compatibility; CSS staggers by child position. */
   delay?: number
 }
 
 const cx = (...parts: (string | undefined)[]) => parts.filter(Boolean).join(' ')
 
-/**
- * Section/content scroll-reveal.
- *
- * These were framer-motion components, which made every page that used them
- * a client bundle and — worse — server-rendered the content at opacity 0,
- * so nothing was visible until the library had downloaded and hydrated.
- * They are now plain server components: the reveal lives entirely in CSS
- * (see `.reveal` in globals.css) and is applied only where scroll-driven
- * animation is supported, so the content ships visible.
- */
-export function FadeUp({ children, className }: WrapperProps) {
-  return <div className={cx('reveal', className)}>{children}</div>
+export function FadeUp({ children, className, delay = 0 }: WrapperProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.6, ease: 'easeOut', delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
-/** Parent for card grids — children reveal in sequence via nth-child ranges. */
 export function StaggerGroup({ children, className }: WrapperProps) {
-  return <div className={cx('reveal-group', className)}>{children}</div>
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-40px' }}
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.1,
+          },
+        },
+        hidden: {},
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 export function StaggerItem({ children, className }: WrapperProps) {
-  return <div className={className}>{children}</div>
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 22 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.6, ease: 'easeOut' },
+        },
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 /** Gentle scale on hover — CSS transition, no JS. */

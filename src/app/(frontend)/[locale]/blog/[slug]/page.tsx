@@ -76,7 +76,7 @@ export default async function BlogPostPage({ params }: Props) {
         ])}
       />
 
-      <article className="bg-ivory pt-28 md:pt-36">
+      <article className="grain bg-ivory pt-28 md:pt-36">
         <header className="mx-auto max-w-4xl px-4 pb-12 text-center sm:px-6 md:pb-16">
           <p className="label-caps mb-4">
             {post.category ? post.category.replace(/-/g, ' ') : 'Journal'}
@@ -117,7 +117,7 @@ export default async function BlogPostPage({ params }: Props) {
           <RichText data={post.body} />
 
           {(relatedRooms.length > 0 || relatedExperiences.length > 0) && (
-            <FadeUp className="mt-14 rounded-lg bg-cream p-8">
+            <FadeUp className="grain mt-14 rounded-lg bg-cream p-8">
               <p className="label-caps mb-4">Continue Planning</p>
               <ul className="space-y-2.5">
                 {relatedRooms.map((room) => (

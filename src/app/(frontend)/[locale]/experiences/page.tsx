@@ -60,7 +60,7 @@ export default async function ExperiencesPage({ params }: { params: Promise<{ lo
         subtitle="Every experience is guided by licensed naturalists and can be arranged at the front desk — or before you arrive."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading
             label="Experiences"

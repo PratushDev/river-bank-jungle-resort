@@ -60,7 +60,7 @@ export default async function GalleryPage({ params }: { params: Promise<{ locale
         subtitle="The resort, the river and the park — as our guests find them."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {items.length === 0 ? (
             <SectionHeading

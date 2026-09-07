@@ -34,7 +34,7 @@ export default async function AwardsPage({ params }: { params: Promise<{ locale:
         title="Honoured by our guests"
         subtitle="Every award reflects the care, hospitality and sense of place we share at the riverbank."
       />
-      <main className="bg-ivory py-24 md:py-32">
+      <main className="grain bg-ivory py-24 md:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading
             align="center"

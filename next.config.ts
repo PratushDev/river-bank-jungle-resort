@@ -25,6 +25,9 @@ const nextConfig: NextConfig = {
         pathname: '/awards/**',
       },
       {
+        pathname: '/textures/**',
+      },
+      {
         pathname: '/logo.png',
       },
     ],

@@ -70,7 +70,7 @@ export function buildMetadata({
       images: [ogImage],
     },
     other: {
-      'theme-color': '#7f9a76',
+      'theme-color': '#1a2e24',
     },
   }
 }
