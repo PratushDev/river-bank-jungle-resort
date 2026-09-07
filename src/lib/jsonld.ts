@@ -18,10 +18,13 @@ const lexicalToPlainText = (richText: unknown): string => {
 
 export function resortSchema(settings: SiteSetting | null): JsonLd {
   const phones = settings?.phones?.map((p) => p.number) ?? [...DEFAULTS.phones]
+  /* sameAs must point at profiles for this exact entity — the OTA listing
+     counts, a site-wide search URL does not. */
   const sameAs = [
     settings?.facebook ?? DEFAULTS.facebook,
     settings?.instagram ?? DEFAULTS.instagram,
     settings?.linkedin ?? DEFAULTS.linkedin,
+    DEFAULTS.bookingCom,
   ].filter(Boolean)
 
   return {

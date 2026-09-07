@@ -1,4 +1,6 @@
-export const SITE_URL = (process.env.NEXT_PUBLIC_SERVER_URL || 'https://riverbankresort.com.np').replace(/\/$/, '')
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SERVER_URL || 'https://riverbankjungleresort.com.np'
+).replace(/\/$/, '')
 
 export const SITE_NAME = 'River Bank Jungle Resort'
 
