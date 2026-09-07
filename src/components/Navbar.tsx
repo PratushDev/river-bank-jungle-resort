@@ -1,6 +1,6 @@
 'use client'
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
@@ -25,7 +25,6 @@ export function Navbar({
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
-  const reduced = useReducedMotion()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -116,68 +115,47 @@ export function Navbar({
         </div>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={reduced ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[4.5rem] z-40 flex flex-col overflow-y-auto bg-espresso md:top-20"
-          >
-            <motion.nav
-              aria-label="Mobile navigation"
-              className="flex flex-1 flex-col items-center justify-center gap-1 py-10"
-              initial="hidden"
-              animate="visible"
-              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
-            >
-              {[{ href: '/', key: 'home' as const }, ...NAV_LINKS].map((link) => (
-                <motion.div
-                  key={link.key}
-                  variants={{
-                    hidden: reduced ? { opacity: 1 } : { opacity: 0, y: 16 },
-                    visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
-                  }}
-                >
-                  <Link
-                    href={link.href}
-                    className={`block px-8 py-2.5 text-center font-serif text-[1.7rem] transition-colors hover:text-gold ${
-                      pathname === link.href ? 'text-gold' : 'text-ivory'
-                    }`}
-                  >
-                    {t(link.key)}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                variants={{
-                  hidden: reduced ? { opacity: 1 } : { opacity: 0, y: 16 },
-                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
-                }}
-                className="mt-6 flex flex-col items-center gap-4"
+      <div
+        className="mobile-menu fixed inset-0 top-[4.5rem] z-40 flex flex-col overflow-y-auto bg-espresso md:top-20"
+        data-open={open}
+        inert={!open}
+      >
+        <nav
+          aria-label="Mobile navigation"
+          className="flex flex-1 flex-col items-center justify-center gap-1 py-10"
+        >
+          {[{ href: '/', key: 'home' as const }, ...NAV_LINKS].map((link) => (
+            <div key={link.key} className="mobile-menu-item">
+              <Link
+                href={link.href}
+                className={`block px-8 py-2.5 text-center font-serif text-[1.7rem] transition-colors hover:text-gold ${
+                  pathname === link.href ? 'text-gold' : 'text-ivory'
+                }`}
               >
-                <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-gold px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-espresso transition-colors hover:bg-gold-dark"
-                >
-                  {t('bookNow')}
-                </a>
-                <a
-                  href={virtualTourUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold hover:text-ivory"
-                >
-                  {t('virtualTour')} <ExternalIcon />
-                </a>
-              </motion.div>
-            </motion.nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                {t(link.key)}
+              </Link>
+            </div>
+          ))}
+          <div className="mobile-menu-item mt-6 flex flex-col items-center gap-4">
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center bg-gold px-8 py-3.5 text-sm font-semibold uppercase tracking-[0.14em] text-espresso transition-colors hover:bg-gold-dark"
+            >
+              {t('bookNow')}
+            </a>
+            <a
+              href={virtualTourUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-gold hover:text-ivory"
+            >
+              {t('virtualTour')} <ExternalIcon />
+            </a>
+          </div>
+        </nav>
+      </div>
     </header>
   )
 }

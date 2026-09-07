@@ -271,3 +271,186 @@ body {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
 }
+
+/* ---------------------------------------------------------------------------
+   Scroll reveals — CSS only.
+
+   These replace the framer-motion wrappers. The critical property is that
+   content is VISIBLE by default: the animation is applied only inside
+   @supports, so any browser without scroll-driven animation support (and
+   anyone who prefers reduced motion) simply gets the finished state
+   immediately. Nothing is ever painted at opacity 0 waiting on JavaScript.
+--------------------------------------------------------------------------- */
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal,
+    .reveal-group > * {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 52%;
+    }
+
+    /* Staggered feel without JS: each child starts fractionally later. */
+    .reveal-group > *:nth-child(2) {
+      animation-range: entry 4% entry 56%;
+    }
+    .reveal-group > *:nth-child(3) {
+      animation-range: entry 8% entry 60%;
+    }
+    .reveal-group > *:nth-child(4) {
+      animation-range: entry 12% entry 64%;
+    }
+    .reveal-group > *:nth-child(n + 5) {
+      animation-range: entry 16% entry 68%;
+    }
+  }
+}
+
+/* The river motif draws itself in where supported, and is simply drawn
+   where it is not. Named distinctly from the older `river-draw` keyframe
+   above, which belongs to `.river-path` and uses a different dash length. */
+@keyframes river-rule-draw {
+  from {
+    stroke-dashoffset: 190;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .river-rule path {
+      stroke-dasharray: 190;
+      animation: river-rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Hero entrance — CSS, so it begins at first paint rather than waiting on a
+   JS bundle. The headline animates transform ONLY and never opacity: an
+   element faded up from 0 does not count as painted, which pushes Largest
+   Contentful Paint out by the length of the animation.
+--------------------------------------------------------------------------- */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-settle {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rise {
+    animation: hero-rise 0.55s ease-out both;
+  }
+  /* LCP-safe: no opacity change. */
+  .hero-settle {
+    animation: hero-settle 0.55s ease-out both;
+  }
+  .hero-delay-1 {
+    animation-delay: 0.08s;
+  }
+  .hero-delay-2 {
+    animation-delay: 0.16s;
+  }
+}
+
+/* Slide crossfade for the hero slideshow. */
+.hero-slide {
+  transition: opacity 3.2s cubic-bezier(0.4, 0.1, 0.3, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Mobile menu overlay — CSS enter/exit.
+
+   Kept mounted and toggled with opacity + visibility so the exit transition
+   works without AnimatePresence; `inert` removes it from the tab order and
+   the accessibility tree while closed.
+--------------------------------------------------------------------------- */
+.mobile-menu {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.mobile-menu[data-open='true'] {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0s;
+}
+
+.mobile-menu-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.mobile-menu[data-open='true'] .mobile-menu-item {
+  opacity: 1;
+  transform: none;
+}
+
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(2) {
+  transition-delay: 0.04s;
+}
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(3) {
+  transition-delay: 0.08s;
+}
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(4) {
+  transition-delay: 0.12s;
+}
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(5) {
+  transition-delay: 0.16s;
+}
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(6) {
+  transition-delay: 0.2s;
+}
+.mobile-menu[data-open='true'] .mobile-menu-item:nth-child(n + 7) {
+  transition-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu-item,
+  .mobile-menu[data-open='true'] .mobile-menu-item {
+    transition-duration: 0s;
+    transition-delay: 0s;
+  }
+  .hero-rise,
+  .hero-settle {
+    animation: none;
+  }
+}
