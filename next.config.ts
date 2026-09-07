@@ -33,6 +33,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'upload.wikimedia.org' },
       { protocol: 'https', hostname: 'picsum.photos' },
       { protocol: 'https', hostname: 'fastly.picsum.photos' },
+      // Media collection uploads on Vercel (see BLOB_READ_WRITE_TOKEN / storage-vercel-blob)
+      { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
     ],
   },
   async redirects() {

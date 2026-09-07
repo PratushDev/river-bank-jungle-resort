@@ -56,4 +56,5 @@ pnpm dev
 
 ## Deploying
 
-See [DEPLOY.md](DEPLOY.md) for the Linux VPS (Node 20+, PM2 + Nginx) runbook.
+- [VERCEL_DEPLOY.md](VERCEL_DEPLOY.md) — Vercel (MongoDB Atlas + Vercel Blob for media)
+- [DEPLOY.md](DEPLOY.md) — self-managed Linux VPS (Node 20+, PM2 + Nginx)

@@ -1,7 +1,8 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, type Plugin } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -22,6 +23,22 @@ import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// Media uploads go to Vercel Blob storage when a token is configured (production/preview
+// on Vercel). Without a token (local dev), Payload falls back to writing files to the
+// local `media/` staticDir configured on the Media collection.
+const plugins: Plugin[] = []
+if (process.env.BLOB_READ_WRITE_TOKEN) {
+  plugins.push(
+    vercelBlobStorage({
+      enabled: true,
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  )
+}
 
 export default buildConfig({
   admin: {
@@ -55,5 +72,5 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
-  plugins: [],
+  plugins,
 })
