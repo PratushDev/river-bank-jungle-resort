@@ -51,7 +51,7 @@ export default async function OffersPage({ params }: { params: Promise<{ locale:
         subtitle="Book direct for our best rates — packages below are confirmed by email or WhatsApp."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-5xl px-4 sm:px-6">
           {offers.length === 0 ? (
             <FadeUp className="text-center">
@@ -70,7 +70,7 @@ export default async function OffersPage({ params }: { params: Promise<{ locale:
                 const until = formatDate(offer.validUntil)
                 return (
                   <StaggerItem key={offer.id}>
-                    <article className="grid overflow-hidden rounded-lg bg-white shadow-card md:grid-cols-[2fr_3fr]">
+                    <article className="grain grid overflow-hidden rounded-lg bg-white shadow-card md:grid-cols-[2fr_3fr]">
                       <div className="relative min-h-56">
                         <Image
                           src={image?.url ?? [PLACEHOLDER.pool, PLACEHOLDER.terrace][i % 2]}

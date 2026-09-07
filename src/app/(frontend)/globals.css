@@ -5,23 +5,23 @@
  * Swap these variables to restyle the whole site.
  */
 @theme {
-  --color-ivory: #f7f8f2;
-  --color-cream: #eaf0e4;
-  --color-espresso: #20372d;
-  --color-espresso-light: #315044;
-  --color-forest: #20372d;
-  --color-sage: #c6d5b8;
-  --color-sage-dark: #7f9a76;
-  --color-gold: #c6d5b8;
-  --color-gold-dark: #7f9a76;
-  --color-clay: #b97958;
-  --color-slate: #5d7168;
+  --color-ivory: #f7f5ee;
+  --color-cream: #ede7dc;
+  --color-espresso: #1a2e24;
+  --color-espresso-light: #2a4336;
+  --color-forest: #1a2e24;
+  --color-sage: #bac8b6;
+  --color-sage-dark: #6c8572;
+  --color-gold: #c59b58;
+  --color-gold-dark: #9e7432;
+  --color-clay: #b36844;
+  --color-slate: #4e6760;
 
-  --font-serif: var(--font-display), 'Cormorant Garamond', Georgia, serif;
-  --font-sans: var(--font-inter), 'Montserrat', system-ui, sans-serif;
+  --font-serif: var(--font-display), 'Marcellus', Georgia, serif;
+  --font-sans: var(--font-inter), 'Plus Jakarta Sans', system-ui, sans-serif;
 
-  --shadow-card: 0 6px 24px -8px rgb(42 33 26 / 0.14);
-  --shadow-card-hover: 0 14px 40px -10px rgb(42 33 26 / 0.22);
+  --shadow-card: 0 6px 24px -8px rgb(26 46 36 / 0.12);
+  --shadow-card-hover: 0 14px 40px -10px rgb(26 46 36 / 0.2);
 }
 
 html {
@@ -30,15 +30,19 @@ html {
 
 body {
   @apply text-espresso font-sans antialiased;
-  /* Graded paper: a soft top-light falling into warmer cream */
+  /* Graded paper: authentic handcrafted Nepali Lokta Kagaz texture with warm ivory/cream gradation */
   background-color: var(--color-ivory);
-  background-image: linear-gradient(180deg, #fbfcf8 0%, var(--color-ivory) 28%, #edf2e8 100%);
+  background-image:
+    linear-gradient(180deg, rgba(251, 249, 244, 0.87) 0%, rgba(247, 245, 238, 0.84) 28%, rgba(237, 231, 220, 0.88) 100%),
+    url('/textures/nepali-kagaz.webp');
+  background-repeat: no-repeat, repeat;
+  background-size: auto, 460px auto;
   background-attachment: fixed;
 }
 
 /*
- * Paper grain — a fine fibre texture laid over section backgrounds.
- * Pure inline SVG turbulence: no asset request, GPU-composited, ~4% alpha.
+ * Paper grain — authentic handcrafted Nepali Lokta Kagaz texture
+ * laid over light sections and card backgrounds.
  */
 .grain {
   position: relative;
@@ -48,14 +52,33 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
-  opacity: 0.05;
+  background-image: url('/textures/nepali-kagaz.webp');
+  background-size: 440px auto;
+  background-repeat: repeat;
+  opacity: 0.16;
   mix-blend-mode: multiply;
 }
 .grain-dark::after {
   mix-blend-mode: screen;
-  opacity: 0.045;
+  opacity: 0.04;
+}
+
+/* Authentic Nepali Lokta Kagaz paper texture overlay */
+.lokta-texture {
+  position: relative;
+}
+.lokta-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url('/textures/nepali-kagaz.webp');
+  background-size: 380px auto;
+  background-repeat: repeat;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+  z-index: 1;
 }
 
 /* Universal hero text treatment — reads over any photograph */
@@ -94,7 +117,7 @@ body {
 
 /* Display headings: large, light, tight leading. Italic word = emphasis. */
 .display {
-  @apply font-serif font-light leading-[1.05] text-espresso;
+  @apply font-serif font-normal leading-[1.1] text-espresso;
 }
 .display em {
   @apply font-normal;
@@ -273,49 +296,8 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
-   Scroll reveals — CSS only.
-
-   These replace the framer-motion wrappers. The critical property is that
-   content is VISIBLE by default: the animation is applied only inside
-   @supports, so any browser without scroll-driven animation support (and
-   anyone who prefers reduced motion) simply gets the finished state
-   immediately. Nothing is ever painted at opacity 0 waiting on JavaScript.
+   Scroll reveals handled by framer-motion
 --------------------------------------------------------------------------- */
-@keyframes reveal-rise {
-  from {
-    opacity: 0;
-    transform: translateY(22px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal,
-    .reveal-group > * {
-      animation: reveal-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 52%;
-    }
-
-    /* Staggered feel without JS: each child starts fractionally later. */
-    .reveal-group > *:nth-child(2) {
-      animation-range: entry 4% entry 56%;
-    }
-    .reveal-group > *:nth-child(3) {
-      animation-range: entry 8% entry 60%;
-    }
-    .reveal-group > *:nth-child(4) {
-      animation-range: entry 12% entry 64%;
-    }
-    .reveal-group > *:nth-child(n + 5) {
-      animation-range: entry 16% entry 68%;
-    }
-  }
-}
 
 /* The river motif draws itself in where supported, and is simply drawn
    where it is not. Named distinctly from the older `river-draw` keyframe

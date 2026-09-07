@@ -67,7 +67,7 @@ export default async function DiningVenuePage({ params }: Props) {
       />
       <Hero size="banner" image={heroImage} label="Dining" title={venue.title} subtitle={venue.cuisine ?? undefined} />
 
-      <section className="bg-ivory py-16 md:py-24">
+      <section className="grain bg-ivory py-16 md:py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <FadeUp>
             {venue.hours && (

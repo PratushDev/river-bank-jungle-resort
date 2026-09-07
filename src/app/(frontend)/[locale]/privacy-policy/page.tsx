@@ -25,7 +25,7 @@ export default async function PrivacyPolicyPage({ params }: { params: Promise<{ 
           { name: 'Privacy Policy', path: '/privacy-policy' },
         ])}
       />
-      <section className="bg-ivory pb-20 pt-32 md:pb-28 md:pt-40">
+      <section className="grain bg-ivory pb-20 pt-32 md:pb-28 md:pt-40">
         <div className="mx-auto max-w-3xl px-4 sm:px-6">
           <h1 className="font-serif text-3xl text-espresso md:text-4xl">Privacy Policy</h1>
           <div className="my-6 h-px w-16 bg-gold" />

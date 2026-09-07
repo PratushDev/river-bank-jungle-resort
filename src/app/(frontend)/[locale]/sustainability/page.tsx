@@ -62,7 +62,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
         subtitle="The park gives us everything. This is how we give back."
       />
 
-      <section className="bg-ivory py-20 md:py-32">
+      <section className="grain bg-ivory py-20 md:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <SectionHeading
             label="Commitment to a greener tomorrow"
@@ -70,7 +70,7 @@ export default async function SustainabilityPage({ params }: { params: Promise<{
             intro="At River Bank, environmental responsibility begins with our organic farm and extends through waste reduction, rainwater harvesting and wildlife conservation."
           />
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-            <FadeUp className="relative aspect-[4/3] overflow-hidden bg-cream lg:col-span-7">
+            <FadeUp className="grain relative aspect-[4/3] overflow-hidden bg-cream lg:col-span-7">
               <Image
                 src="/sustainability/ecosystem.png"
                 alt="River Bank Jungle Resort's sustainability ecosystem"

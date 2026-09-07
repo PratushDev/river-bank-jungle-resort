@@ -46,7 +46,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         subtitle="Practical guides to Chitwan from the people who live beside the park."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           {posts.length === 0 ? (
             <SectionHeading label="Soon" title="First Stories Coming Shortly" />

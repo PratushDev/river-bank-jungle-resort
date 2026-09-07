@@ -19,7 +19,7 @@ export function VirtualTourPrompt({ url }: Props) {
       // Storage can be disabled by privacy settings; the prompt still works.
     }
 
-    const timer = window.setTimeout(() => setOpen(true), 8000)
+    const timer = window.setTimeout(() => setOpen(true), 25000)
     return () => window.clearTimeout(timer)
   }, [])
 

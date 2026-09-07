@@ -51,7 +51,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         subtitle="Write, call or message us on WhatsApp — we reply the same day."
       />
 
-      <section className="bg-ivory py-20 md:py-28">
+      <section className="grain bg-ivory py-20 md:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2">
           <FadeUp>
             <h2 className="font-serif text-2xl text-espresso md:text-3xl">Send an Enquiry</h2>
@@ -113,7 +113,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
       </section>
 
       {faqs.length > 0 && (
-        <section className="bg-cream py-20 md:py-28">
+        <section className="grain bg-cream py-20 md:py-28">
           <div className="mx-auto max-w-3xl px-4 sm:px-6">
             <SectionHeading
               label="Good to Know"
